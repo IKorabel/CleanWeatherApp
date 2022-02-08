@@ -7,28 +7,37 @@
 
 import UIKit
 
-class WeatherInformationHeaderView: UIView {
+class MainWeatherInfoHeaderView: UIView {
     
-    lazy var weatherInfoStackView: UIStackView = {
+    lazy var mainWeatherInfoStackview: UIStackView = {
         let weatherInfoStackView = UIStackView(frame: frame)
         weatherInfoStackView.translatesAutoresizingMaskIntoConstraints = false
         weatherInfoStackView.axis = .vertical
-        weatherInfoStackView.distribution = .fillEqually
+        weatherInfoStackView.spacing = 1
         addSubview(weatherInfoStackView)
         NSLayoutConstraint.activate([
-            weatherInfoStackView.topAnchor.constraint(equalTo: topAnchor),
-            weatherInfoStackView.leftAnchor.constraint(equalTo: leftAnchor),
-            weatherInfoStackView.rightAnchor.constraint(equalTo: rightAnchor),
-            weatherInfoStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            weatherInfoStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            weatherInfoStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: 8),
+            weatherInfoStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -8)
         ])
         return weatherInfoStackView
     }()
     
+    lazy var highestAndLowestStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 5
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(stackView)
+        NSLayoutConstraint.activate([stackView.widthAnchor.constraint(equalToConstant: 40)])
+        return stackView
+    }()
+    
     lazy var locationLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 30)
+        label.font = UIFont.systemFont(ofSize: 37, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .white
         label.text = "Неизвестная локация"
@@ -37,7 +46,7 @@ class WeatherInformationHeaderView: UIView {
     
     lazy var temperatureLabel: UILabel = {
         let temperatureLabel = UILabel()
-        temperatureLabel.font = UIFont.boldSystemFont(ofSize: 50)
+        temperatureLabel.font = UIFont.systemFont(ofSize: 102, weight: .thin)
         temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
         temperatureLabel.textAlignment = .center
         temperatureLabel.textColor = .white
@@ -47,12 +56,28 @@ class WeatherInformationHeaderView: UIView {
     
     lazy var weatherDescriptionLabel: UILabel = {
         let weatherDescriptionLabel = UILabel()
-        weatherDescriptionLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        weatherDescriptionLabel.font = UIFont.systemFont(ofSize: 24, weight: .regular)
         weatherDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         weatherDescriptionLabel.textAlignment = .center
         weatherDescriptionLabel.textColor = .white
         weatherDescriptionLabel.text = "__"
         return weatherDescriptionLabel
+    }()
+    
+    lazy var highestTempLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 21, weight: .medium)
+        label.textColor = .white
+        label.text = "H:_"
+        return label
+    }()
+    
+    lazy var lowestTempLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 21, weight: .medium)
+        label.textColor = .white
+        label.text = "L:_"
+        return label
     }()
     
     
@@ -61,14 +86,13 @@ class WeatherInformationHeaderView: UIView {
        setupView()
      }
      
-     //initWithCode to init view from xib or storyboard
      required init?(coder aDecoder: NSCoder) {
        super.init(coder: aDecoder)
        setupView()
      }
     
     convenience init(frame: CGRect, weatherInformation: WeatherInformation?) {
-        self.init(frame: frame)
+        self.init()
         guard let weatherInfo = weatherInformation else { return }
         setWeatherInformation(weatherInformation: weatherInfo)
     }
@@ -80,16 +104,30 @@ class WeatherInformationHeaderView: UIView {
             locationLabel.text = "\(placemark.locality ?? "")"
         }
         temperatureLabel.text = "\(Int(weatherInfo.current.temp))°"
+        setHighestAndLowestTemp(dailyWeather: weatherInfo.daily)
         weatherDescriptionLabel.text = "\(weatherInfo.current.weather.first!.description)"
     }
+    
+    func setHighestAndLowestTemp(dailyWeather: [Daily]) {
+        guard let daily = dailyWeather.first else { return }
+        let dailyTemp = daily.temp
+        highestTempLabel.text = "H:\(Int(dailyTemp.max))°"
+        lowestTempLabel.text = "L: \(Int(dailyTemp.min))°"
+    }
+    
      
      //common func to init our view
      private func setupView() {
-       backgroundColor = .red
-       layer.cornerRadius = 20
-       weatherInfoStackView.addArrangedSubview(locationLabel)
-       weatherInfoStackView.addArrangedSubview(temperatureLabel)
-       weatherInfoStackView.addArrangedSubview(weatherDescriptionLabel)
+       mainWeatherInfoStackview.addArrangedSubview(locationLabel)
+       mainWeatherInfoStackview.addArrangedSubview(temperatureLabel)
+       mainWeatherInfoStackview.addArrangedSubview(weatherDescriptionLabel)
+       addHighestAndLowestTemperature()
      }
+    
+    func addHighestAndLowestTemperature() {
+        highestAndLowestStackView.addArrangedSubview(highestTempLabel)
+        highestAndLowestStackView.addArrangedSubview(lowestTempLabel)
+        mainWeatherInfoStackview.addArrangedSubview(highestAndLowestStackView)
+    }
 
 }

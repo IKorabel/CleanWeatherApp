@@ -30,12 +30,13 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 5),
-            tableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5),
-            tableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5),
+            tableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
+            tableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -5)
         ])
+   //   tableView.isHidden = true
         return tableView
-    }()
+}()
     
 
   // MARK: Object lifecycle
@@ -52,6 +53,10 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
     setup()
   }
   
+    override func loadView() {
+        super.loadView()
+        view = LinearGradientView(gradientColor: MainWeatherBackgroundTheme.evening.themeGradientColors)
+    }
   // MARK: Setup
   
   private func setup()
@@ -71,7 +76,9 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
     func configureTableView() {
         weatherTableView.delegate = self
         weatherTableView.dataSource = self
+        weatherTableView.showsVerticalScrollIndicator = false
         weatherTableView.backgroundColor = .clear
+        weatherTableView.register(DailyWeatherTableViewCell.self, forCellReuseIdentifier: CellIdentifiers.dailyWeatherCell)
     }
     
     
@@ -91,14 +98,12 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
   
   override func viewDidLoad() {
     super.viewDidLoad()
-      view.backgroundColor = .blue
+      configureTableView()
       WeatherApiManager.shared.getWeatherInRegion(lat: "56.79369773409799", long: "60.624700760136335") { [self] info in
           weatherInfo = info
-          DispatchQueue.main.async {
-              self.weatherTableView.reloadData()
-          }
+          print("day: \(weatherInfo?.current.defineDayPhase())")
+          DispatchQueue.main.async { self.weatherTableView.reloadData() }
       }
-    configureTableView()
   }
     
   override func viewDidAppear(_ animated: Bool) {
@@ -127,30 +132,66 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
 extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDelegate {
     
     func createWeatherInformationHeaderView() -> UIView {
-        let weatherInformationHeader = WeatherInformationHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.width), weatherInformation: weatherInfo)
+        let weatherInformationHeader = MainWeatherInfoHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.width), weatherInformation: weatherInfo)
         return weatherInformationHeader
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        switch section {
+        case 0:
+          return 0 // temporally
+        case 1:
+          return weatherInfo?.daily.count ?? 0
+        default:
+           return 0
+        }
     }
+
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return createWeatherInformationHeaderView()
+        switch section {
+        case 0:
+            return createWeatherInformationHeaderView()
+        default:
+            return nil
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return view.frame.size.width
+        if section == 0 {
+            return view.frame.size.width
+        } else {
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.section {
+        case 0:
+            return 0
+        case 1:
+            return 55
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.cellForRow(at: indexPath) else { return UITableViewCell() }
-        cell.backgroundColor = .red
-        return cell
+        switch indexPath.section {
+        case 0:
+            return UITableViewCell()
+        case 1:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.dailyWeatherCell) as? DailyWeatherTableViewCell else {
+            return UITableViewCell() }
+            cell.setDailyForecast(daily: weatherInfo?.daily[indexPath.row])
+            return cell
+        default:
+            return UITableViewCell()
+        }
     }
     
 }
