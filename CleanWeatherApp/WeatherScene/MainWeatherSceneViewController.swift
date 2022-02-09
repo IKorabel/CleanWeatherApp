@@ -25,7 +25,7 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
   var weatherInfo: WeatherInformation?
     
   lazy var weatherTableView: UITableView = {
-        let tableView = UITableView()
+      let tableView = UITableView(frame: view.frame, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
@@ -79,6 +79,7 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
         weatherTableView.showsVerticalScrollIndicator = false
         weatherTableView.backgroundColor = .clear
         weatherTableView.register(DailyWeatherTableViewCell.self, forCellReuseIdentifier: CellIdentifiers.dailyWeatherCell)
+        weatherTableView.register(HourlyWeatherTableViewCell.self, forCellReuseIdentifier: CellIdentifiers.hourlyWeatherTableViewCell)
     }
     
     
@@ -138,7 +139,7 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-          return 0 // temporally
+            return 1 // temporally
         case 1:
           return weatherInfo?.daily.count ?? 0
         default:
@@ -171,7 +172,7 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            return 0
+            return 147
         case 1:
             return 55
         default:
@@ -182,10 +183,11 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            return UITableViewCell()
+            guard let hourlyWeatherCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.hourlyWeatherTableViewCell) as? HourlyWeatherTableViewCell else { return UITableViewCell() }
+            hourlyWeatherCell.setHourlyForecast(hourlyForecast: weatherInfo?.hourly ?? [])
+            return hourlyWeatherCell
         case 1:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.dailyWeatherCell) as? DailyWeatherTableViewCell else {
-            return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.dailyWeatherCell) as? DailyWeatherTableViewCell else { return UITableViewCell() }
             cell.setDailyForecast(daily: weatherInfo?.daily[indexPath.row])
             return cell
         default:

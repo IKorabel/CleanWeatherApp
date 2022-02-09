@@ -15,6 +15,11 @@ extension Date {
            return dateFormatter.string(from: self)
     }
     
+    func hourFromDate() -> Int {
+        guard let hour = Calendar.current.dateComponents([.hour], from: self).hour else { return 0 }
+        return hour
+    }
+    
     func isWinter() -> Bool {
         let firstWinterMonths = 1...2
         guard let month = Calendar.current.dateComponents([.month], from: self).month else { return false }
@@ -29,9 +34,7 @@ extension Date {
         
         let precipitation: Precipitation = isWinter() ? .snow : .none
         
-        guard let currentTime = Calendar.current.dateComponents([.hour], from: self).hour else {
-            return .day(precipitation: precipitation)
-        }
+        let currentTime = hourFromDate()
         
         let morningTime = 5...11
         let afternoonTime = 12...17

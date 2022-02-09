@@ -15,7 +15,7 @@ class DailyWeatherTableViewCell: UITableViewCell {
         stackView.axis = .horizontal
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fillProportionally
-        stackView.spacing = 75
+        stackView.spacing = 70
         contentView.addSubview(stackView)
         NSLayoutConstraint.activate([stackView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
                                      stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -50,7 +50,6 @@ class DailyWeatherTableViewCell: UITableViewCell {
         label.font = UIFont.systemFont(ofSize: 22, weight: .medium)
         label.textColor = .lightGray
         label.text = "__"
-        NSLayoutConstraint.activate([label.widthAnchor.constraint(equalToConstant: 40)])
         contentView.addSubview(label)
         return label
     }()
@@ -87,21 +86,21 @@ class DailyWeatherTableViewCell: UITableViewCell {
     
     
     func setDailyForecast(daily: Daily?) {
-        backgroundColor = .clear
         guard let daily = daily else { return }
         weekdayLabel.text = daily.dt.convertUnixTimeToDateAndTime().dayOfTheWeek().shorted(to: 3)
-        minDailyTempLabel.text = "\(Int(daily.temp.min))"
-        maxDailyTempLabel.text = "\(Int(daily.temp.max))"
+        minDailyTempLabel.text = "\(Int(daily.temp.min))°"
+        maxDailyTempLabel.text = "\(Int(daily.temp.max))°"
         guard let suitableIcon = WeatherIconManager(rawValue: daily.weather.first!.icon) else { return }
         dailyTempIcon.image = suitableIcon.image
     }
     
     func addViews() {
         addViewsToMainStackView()
+        cellSettings()
       //  addLabelsToTempStackView()
     }
     
-    func addViewsToMainStackView() {
+    private func addViewsToMainStackView() {
         dailyWeatherStackView.addArrangedSubview(weekdayLabel)
         dailyWeatherStackView.addArrangedSubview(dailyTempIcon)
         dailyWeatherStackView.addArrangedSubview(tempStackView)
@@ -109,14 +108,10 @@ class DailyWeatherTableViewCell: UITableViewCell {
         tempStackView.addArrangedSubview(maxDailyTempLabel)
     }
     
-    func addLabelsToTempStackView() {
-        tempStackView.addArrangedSubview(minDailyTempLabel)
-        tempStackView.addArrangedSubview(maxDailyTempLabel)
-        dailyWeatherStackView.addArrangedSubview(tempStackView)
-    }
-    
-    func setShape() {
+    private func cellSettings() {
+        layer.cornerRadius = 15
         selectionStyle = .none
+        backgroundColor = .clear
     }
     
     

@@ -37,6 +37,8 @@
 		A2884C6D27138DD2005CEA95 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2884C6B27138DD2005CEA95 /* LaunchScreen.storyboard */; };
 		A2884C7527138DE6005CEA95 /* WeatherAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2884C7427138DE6005CEA95 /* WeatherAPIManager.swift */; };
 		A2C2D91227B40B0B005263D4 /* HourlyWeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C2D91127B40B0B005263D4 /* HourlyWeatherTableViewCell.swift */; };
+		A2C2D91427B472C1005263D4 /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C2D91327B472C1005263D4 /* UITableViewCellExtension.swift */; };
+		A2C2D91827B48254005263D4 /* DetailInformationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C2D91727B48254005263D4 /* DetailInformationCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +74,8 @@
 		A2884C6E27138DD2005CEA95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2884C7427138DE6005CEA95 /* WeatherAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPIManager.swift; sourceTree = "<group>"; };
 		A2C2D91127B40B0B005263D4 /* HourlyWeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyWeatherTableViewCell.swift; sourceTree = "<group>"; };
+		A2C2D91327B472C1005263D4 /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
+		A2C2D91727B48254005263D4 /* DetailInformationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInformationCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +121,7 @@
 				A202820E27B14AFD00408BB3 /* UIFontExtension.swift */,
 				A281459327A2E27700CFC681 /* UIViewExtension.swift */,
 				A202821927B2BB7B00408BB3 /* UIColorExtension.swift */,
+				A2C2D91327B472C1005263D4 /* UITableViewCellExtension.swift */,
 			);
 			path = UIKitExtensions;
 			sourceTree = "<group>";
@@ -225,9 +230,9 @@
 		A281459727A2FB1300CFC681 /* TableView */ = {
 			isa = PBXGroup;
 			children = (
+				A2C2D91627B48227005263D4 /* DetailInformationGroup */,
 				A2C2D91027B40AE0005263D4 /* HourlyWeatherGroup */,
 				A2C2D90F27B40ACB005263D4 /* DailyWeatherGroup */,
-				A202821027B150BE00408BB3 /* CollectionView */,
 				A281459827A2FB4100CFC681 /* MainWeatherInfoHeaderView.swift */,
 			);
 			path = TableView;
@@ -278,9 +283,18 @@
 		A2C2D91027B40AE0005263D4 /* HourlyWeatherGroup */ = {
 			isa = PBXGroup;
 			children = (
+				A202821027B150BE00408BB3 /* CollectionView */,
 				A2C2D91127B40B0B005263D4 /* HourlyWeatherTableViewCell.swift */,
 			);
 			path = HourlyWeatherGroup;
+			sourceTree = "<group>";
+		};
+		A2C2D91627B48227005263D4 /* DetailInformationGroup */ = {
+			isa = PBXGroup;
+			children = (
+				A2C2D91727B48254005263D4 /* DetailInformationCell.swift */,
+			);
+			path = DetailInformationGroup;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -364,11 +378,13 @@
 				A2884C6227138DCF005CEA95 /* ViewController.swift in Sources */,
 				A281458927A1B0CB00CFC681 /* MainWeatherSceneModels.swift in Sources */,
 				A202821A27B2BB7B00408BB3 /* UIColorExtension.swift in Sources */,
+				A2C2D91427B472C1005263D4 /* UITableViewCellExtension.swift in Sources */,
 				A281459427A2E27800CFC681 /* UIViewExtension.swift in Sources */,
 				A202821527B2A03600408BB3 /* GradientView.swift in Sources */,
 				A2884C5E27138DCF005CEA95 /* AppDelegate.swift in Sources */,
 				A202821827B2B9EF00408BB3 /* IntExtension.swift in Sources */,
 				A2884C7527138DE6005CEA95 /* WeatherAPIManager.swift in Sources */,
+				A2C2D91827B48254005263D4 /* DetailInformationCell.swift in Sources */,
 				A281458727A1B0CB00CFC681 /* MainWeatherSceneWorker.swift in Sources */,
 				A281458B27A1B0CB00CFC681 /* MainWeatherSceneInteractor.swift in Sources */,
 				A281459927A2FB4100CFC681 /* MainWeatherInfoHeaderView.swift in Sources */,
