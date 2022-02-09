@@ -12,8 +12,11 @@ class HourlyWeatherCollectionViewCell: UICollectionViewCell {
     lazy var hourlyWeatherStackView: UIStackView = {
         let stackview = UIStackView()
         stackview.axis = .vertical
-        stackview.distribution = .fillEqually
+        stackview.distribution = .fillProportionally
         stackview.translatesAutoresizingMaskIntoConstraints = false
+        stackview.addArrangedSubview(hourLabel)
+        stackview.addArrangedSubview(hourlyWeatherIcon)
+        stackview.addArrangedSubview(hourlyTemperatureLabel)
         return stackview
     }()
     
@@ -30,6 +33,7 @@ class HourlyWeatherCollectionViewCell: UICollectionViewCell {
         let icon = UIImageView()
         icon.translatesAutoresizingMaskIntoConstraints = false
         icon.contentMode = .scaleAspectFit
+        NSLayoutConstraint.activate([icon.widthAnchor.constraint(equalToConstant: 30),       icon.heightAnchor.constraint(equalToConstant: 30)])
         return icon
     }()
     
@@ -44,6 +48,8 @@ class HourlyWeatherCollectionViewCell: UICollectionViewCell {
         hourLabel.text = "\(hourly.dt)"
         hourlyTemperatureLabel.text = "\(hourly.temp)"
     }
+    
+    
     
     
     

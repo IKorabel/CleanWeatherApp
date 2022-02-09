@@ -53,20 +53,6 @@ struct Current: Codable {
     let wind_speed: Double
     let wind_deg: Int
     let weather: [Weather]
-    
-    func defineDayPhase() -> MainWeatherBackgroundTheme  {
-        let currentDate = Date()
-        let sunsetTime = sunset.convertUnixTimeToDateAndTime()
-        let sunriseTime = sunrise.convertUnixTimeToDateAndTime()
-        
-        if currentDate >= sunriseTime && currentDate <= sunsetTime {
-            return .day(precipitation: .none)
-        } else if currentDate <= sunriseTime && currentDate > sunsetTime {
-            return .night(precipitation: .none)
-        } else {
-            return .evening
-        }
-    }
 }
 
 struct Weather: Codable {

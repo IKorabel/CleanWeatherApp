@@ -14,7 +14,8 @@ class DailyWeatherTableViewCell: UITableViewCell {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.spacing = 10
+        stackView.distribution = .fillProportionally
+        stackView.spacing = 75
         contentView.addSubview(stackView)
         NSLayoutConstraint.activate([stackView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
                                      stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -27,7 +28,7 @@ class DailyWeatherTableViewCell: UITableViewCell {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
-        stackView.spacing = 3
+        stackView.spacing = 1
         contentView.addSubview(stackView)
         return stackView
     }()
@@ -39,7 +40,7 @@ class DailyWeatherTableViewCell: UITableViewCell {
         label.font = UIFont.systemFont(ofSize: 22, weight: .medium)
         label.text = "__"
         contentView.addSubview(label)
-        NSLayoutConstraint.activate([label.widthAnchor.constraint(equalToConstant: 100)])
+        NSLayoutConstraint.activate([label.widthAnchor.constraint(equalToConstant: 85)])
         return label
     }()
     
@@ -49,6 +50,7 @@ class DailyWeatherTableViewCell: UITableViewCell {
         label.font = UIFont.systemFont(ofSize: 22, weight: .medium)
         label.textColor = .lightGray
         label.text = "__"
+        NSLayoutConstraint.activate([label.widthAnchor.constraint(equalToConstant: 40)])
         contentView.addSubview(label)
         return label
     }()
@@ -96,12 +98,15 @@ class DailyWeatherTableViewCell: UITableViewCell {
     
     func addViews() {
         addViewsToMainStackView()
-        addLabelsToTempStackView()
+      //  addLabelsToTempStackView()
     }
     
     func addViewsToMainStackView() {
         dailyWeatherStackView.addArrangedSubview(weekdayLabel)
         dailyWeatherStackView.addArrangedSubview(dailyTempIcon)
+        dailyWeatherStackView.addArrangedSubview(tempStackView)
+        tempStackView.addArrangedSubview(minDailyTempLabel)
+        tempStackView.addArrangedSubview(maxDailyTempLabel)
     }
     
     func addLabelsToTempStackView() {

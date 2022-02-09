@@ -60,15 +60,9 @@ class LinearGradientView: UIView {
         commonInit()
     }
     
-    convenience init(gradientColor: GradientColor) {
-        self.init()
-        topColor = gradientColor.firstGradientColor
-        bottomColor = gradientColor.secondGradientColor
-        commonInit()
-    }
-    
     private func commonInit() {
-        gradientLayer.colors = [topColor.cgColor, bottomColor.cgColor]
+        let themeGradientColor = Date().defineDayPhase().themeGradientColors
+        gradientLayer.colors = [themeGradientColor.firstGradientColor.cgColor, themeGradientColor.secondGradientColor.cgColor]
         gradientLayer.startPoint = Point.topLeading.point
         gradientLayer.endPoint = Point.bottomTrailing.point
         layer.addSublayer(gradientLayer)

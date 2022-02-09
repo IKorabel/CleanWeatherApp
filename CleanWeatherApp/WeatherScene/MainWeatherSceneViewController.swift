@@ -55,7 +55,7 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
   
     override func loadView() {
         super.loadView()
-        view = LinearGradientView(gradientColor: MainWeatherBackgroundTheme.evening.themeGradientColors)
+        view = LinearGradientView()
     }
   // MARK: Setup
   
@@ -101,7 +101,6 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
       configureTableView()
       WeatherApiManager.shared.getWeatherInRegion(lat: "56.79369773409799", long: "60.624700760136335") { [self] info in
           weatherInfo = info
-          print("day: \(weatherInfo?.current.defineDayPhase())")
           DispatchQueue.main.async { self.weatherTableView.reloadData() }
       }
   }
