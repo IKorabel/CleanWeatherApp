@@ -30,6 +30,13 @@ extension Date {
         }
     }
     
+    func convertTimeToString() -> String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        let stringDate = dateFormatter.string(from: self)
+        return stringDate
+    }
+    
     func defineDayPhase() -> MainWeatherBackgroundTheme {
         
         let precipitation: Precipitation = isWinter() ? .snow : .none

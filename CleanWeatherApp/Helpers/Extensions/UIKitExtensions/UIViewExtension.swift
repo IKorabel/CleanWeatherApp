@@ -11,11 +11,13 @@ import UIKit
 extension UIView {
     
     
-    func addASBlurEffect() {
-        let blur = UIBlurEffect(style: .dark)
-        let blurEffectView = UIVisualEffectView(effect: blur)
-        blurEffectView.frame = self.bounds
-        self.insertSubview(blurEffectView, at: 0)
+    func createASBlurEffect() -> UIVisualEffectView {
+        let blurEffect = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        blurEffect.clipsToBounds = true
+        blurEffect.layer.cornerRadius = 15
+        blurEffect.layer.borderColor = UIColor.white.cgColor
+        blurEffect.layer.borderWidth = 0.5
+        return blurEffect
     }
     
 }

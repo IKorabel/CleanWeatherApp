@@ -11,4 +11,6 @@ struct CellIdentifiers {
     static let dailyWeatherCell = "dailyWeatherCell"
     static let hourlyWeatherTableViewCell = "hourlyWeatherTableViewCell"
     static let hourlyWeatherCollectionViewCell = "hourlyWeatherCollectionViewCell"
+    static let detailInformationTableViewCell = "detailInformationTableViewCell"
+    static let detailInformationCollectionViewCell = "detailInformationCollectionViewCell"
 }

@@ -13,7 +13,7 @@ class HourlyWeatherCollectionViewCell: UICollectionViewCell {
         let stackview = UIStackView()
         stackview.axis = .vertical
         stackview.distribution = .fillProportionally
-        stackview.spacing = 10
+        stackview.spacing = 21
         stackview.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(stackview)
         NSLayoutConstraint.activate([stackview.leftAnchor.constraint(equalTo: contentView.leftAnchor),

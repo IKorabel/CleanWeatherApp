@@ -80,6 +80,7 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
         weatherTableView.backgroundColor = .clear
         weatherTableView.register(DailyWeatherTableViewCell.self, forCellReuseIdentifier: CellIdentifiers.dailyWeatherCell)
         weatherTableView.register(HourlyWeatherTableViewCell.self, forCellReuseIdentifier: CellIdentifiers.hourlyWeatherTableViewCell)
+        weatherTableView.register(DetailInformationCell.self, forCellReuseIdentifier: CellIdentifiers.detailInformationTableViewCell)
     }
     
     
@@ -103,6 +104,7 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
       WeatherApiManager.shared.getWeatherInRegion(lat: "56.79369773409799", long: "60.624700760136335") { [self] info in
           weatherInfo = info
           DispatchQueue.main.async { self.weatherTableView.reloadData() }
+          print("desc: \(DetailWeatherInformationManager(rawValue: 6)!.getDescription(current: weatherInfo!.current))")
       }
   }
     
@@ -139,9 +141,11 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 1 // temporally
+            return 1
         case 1:
           return weatherInfo?.daily.count ?? 0
+        case 2:
+          return 1
         default:
            return 0
         }
@@ -149,7 +153,7 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
 
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -175,6 +179,9 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
             return 147
         case 1:
             return 55
+        case 2:
+            guard weatherInfo?.current != nil else { return 0 }
+            return 509
         default:
             return 0
         }
@@ -190,6 +197,10 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.dailyWeatherCell) as? DailyWeatherTableViewCell else { return UITableViewCell() }
             cell.setDailyForecast(daily: weatherInfo?.daily[indexPath.row])
             return cell
+        case 2:
+            guard let detailInfoCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.detailInformationTableViewCell) as? DetailInformationCell else { return UITableViewCell() }
+            detailInfoCell.setCurrentWeather(current: weatherInfo?.current)
+            return detailInfoCell
         default:
             return UITableViewCell()
         }

@@ -8,6 +8,8 @@
 import Foundation
 import CoreLocation
 
+typealias UVindex = Double
+
 struct WeatherInformation: Codable {
     let lat: Double
     let lon: Double
@@ -48,7 +50,7 @@ struct Current: Codable {
     let pressure: Int
     let humidity: Int
     let dew_point: Double
-    let uvi: Double
+    let uvi: UVindex
     let clouds: Int
     let wind_speed: Double
     let wind_deg: Int
@@ -88,7 +90,7 @@ struct Daily: Codable {
     let wind_deg: Int
     let weather: [Weather]
     let clouds: Int
-    let uvi: Double
+    let uvi: UVindex
 }
 
 struct Temperature: Codable {
