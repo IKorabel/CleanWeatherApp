@@ -13,7 +13,7 @@ class ASLabelWithIcon: UIStackView {
         let icon = UIImageView()
         icon.translatesAutoresizingMaskIntoConstraints = false
         icon.contentMode = .scaleAspectFit
-        addArrangedSubview(icon)
+        addSubview(icon)
         NSLayoutConstraint.activate([icon.widthAnchor.constraint(equalToConstant: 19),
                                      icon.heightAnchor.constraint(equalToConstant: 18)])
         return icon
@@ -21,10 +21,11 @@ class ASLabelWithIcon: UIStackView {
     
     lazy var label: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         label.text = label.text?.uppercased()
-        addArrangedSubview(label)
+        addSubview(label)
         return label
     }()
     
@@ -39,9 +40,16 @@ class ASLabelWithIcon: UIStackView {
     }
     
     func commonInit() {
+        addViews()
         distribution = .fillProportionally
+        translatesAutoresizingMaskIntoConstraints = false
         axis = .horizontal
         spacing = 4
+    }
+    
+    func addViews() {
+        addArrangedSubview(icon)
+        addArrangedSubview(label)
     }
 
 }

@@ -20,4 +20,9 @@ extension UIView {
         return blurEffect
     }
     
+    func addBorder() {
+        layer.borderWidth = 2
+        layer.borderColor = UIColor.white.cgColor
+    }
+    
 }

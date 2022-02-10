@@ -9,7 +9,8 @@ import Foundation
 
 extension String {
     
-        func shorted(to symbols: Int) -> String {
+    func shorted(to symbols: Int, exceptionWord: String?) -> String {
+        guard exceptionWord != self else { return exceptionWord! }
             guard self.count > symbols else {
                 return self
             }

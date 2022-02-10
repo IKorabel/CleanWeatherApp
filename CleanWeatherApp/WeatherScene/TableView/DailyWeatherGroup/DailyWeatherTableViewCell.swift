@@ -87,7 +87,7 @@ class DailyWeatherTableViewCell: UITableViewCell {
     
     func setDailyForecast(daily: Daily?) {
         guard let daily = daily else { return }
-        weekdayLabel.text = daily.dt.convertUnixTimeToDateAndTime().dayOfTheWeek().shorted(to: 3)
+        weekdayLabel.text = daily.dt.convertUnixTimeToDateAndTime().dayOfTheWeek().shorted(to: 3, exceptionWord: "Today")
         minDailyTempLabel.text = "\(Int(daily.temp.min))°"
         maxDailyTempLabel.text = "\(Int(daily.temp.max))°"
         guard let suitableIcon = WeatherIconManager(rawValue: daily.weather.first!.icon) else { return }

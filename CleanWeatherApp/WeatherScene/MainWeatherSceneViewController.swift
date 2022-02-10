@@ -30,8 +30,8 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 5),
-            tableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-            tableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
+            tableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
+            tableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -5)
         ])
    //   tableView.isHidden = true
@@ -188,6 +188,7 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print(tableView.frame.width)
         switch indexPath.section {
         case 0:
             guard let hourlyWeatherCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.hourlyWeatherTableViewCell) as? HourlyWeatherTableViewCell else { return UITableViewCell() }

@@ -14,7 +14,7 @@ class HourlyWeatherTableViewCell: UITableViewCell {
         layout.itemSize = CGSize(width: 30, height: 30)
         layout.sectionInset = UIEdgeInsets(top: 6, left: 0, bottom: 0, right: 0)
         layout.scrollDirection = .horizontal
-        let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: frame.width, height: 147), collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 355, height: 147), collectionViewLayout: layout)
         collectionView.collectionViewLayout = layout
         collectionView.showsHorizontalScrollIndicator = false
         contentView.addSubview(collectionView)

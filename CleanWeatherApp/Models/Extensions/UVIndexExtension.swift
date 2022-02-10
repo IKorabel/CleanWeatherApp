@@ -27,6 +27,6 @@ extension UVindex {
     }
     
     func getUvIndexDescription() -> String {
-        return "\(Int(self)) \(defineLevelOfUV())"
+        return "\(Int(self)) \n\(defineLevelOfUV())"
     }
 }

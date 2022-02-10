@@ -15,14 +15,15 @@ class DetailInformationCell: UITableViewCell {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 162, height: 165)
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 10)
-        let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: contentView.frame.width, height: 509),
+        layout.sectionInset.right = 5
+        layout.sectionInset.left = 5
+        let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 355, height: 520),
                                               collectionViewLayout: layout)
         contentView.addSubview(collectionView)
-        NSLayoutConstraint.activate([collectionView.leftAnchor.constraint(equalTo: leftAnchor),
-                                      collectionView.rightAnchor.constraint(equalTo: rightAnchor),
-                                      collectionView.topAnchor.constraint(equalTo: topAnchor),
-                                      collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)])
+        NSLayoutConstraint.activate([collectionView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+                                     collectionView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+                                     collectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
+                                     collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)])
         return collectionView
     }()
     
@@ -55,10 +56,13 @@ class DetailInformationCell: UITableViewCell {
     func setCurrentWeather(current: Current?) {
         guard let current = current else { return }
         self.currentWeather = current
+        DispatchQueue.main.async {
+            self.detailInformationCollectionView.reloadData()
+        }
     }
 }
 
-extension DetailInformationCell: UICollectionViewDataSource, UICollectionViewDelegate {
+extension DetailInformationCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 6
@@ -66,9 +70,17 @@ extension DetailInformationCell: UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let detailInformationCell = collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifiers.detailInformationCollectionViewCell, for: indexPath) as? DetailInformationCollectionViewCell else { return UICollectionViewCell() }
-        detailInformationCell.backgroundColor = .blue
-        detailInformationCell.setDetailInformation(index: indexPath.row)
+        detailInformationCell.setDetailInformation(currentInfo: currentWeather, index: indexPath.row)
         return detailInformationCell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 162, height: 165)
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 15
     }
     
     

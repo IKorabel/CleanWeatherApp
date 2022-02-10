@@ -39,7 +39,7 @@ class HourlyWeatherCollectionViewCell: UICollectionViewCell {
         icon.translatesAutoresizingMaskIntoConstraints = false
         icon.contentMode = .scaleAspectFit
         contentView.addSubview(icon)
-        NSLayoutConstraint.activate([icon.widthAnchor.constraint(equalToConstant: 30),       icon.heightAnchor.constraint(equalToConstant: 26)])
+        NSLayoutConstraint.activate([icon.widthAnchor.constraint(equalToConstant: 30),         icon.heightAnchor.constraint(equalToConstant: 26)])
         return icon
     }()
     
@@ -64,7 +64,8 @@ class HourlyWeatherCollectionViewCell: UICollectionViewCell {
     }
     
     func setHourlyForecast(hourly: Hourly) {
-        hourLabel.text = "\(hourly.dt.convertUnixTimeToDateAndTime().hourFromDate())"
+        let hourFromHourlyForecast = hourly.dt.convertUnixTimeToDateAndTime()
+        hourLabel.text = hourFromHourlyForecast.getHourDescription()
         hourlyTemperatureLabel.text = "\(Int(hourly.temp))°"
         guard let weather = hourly.weather.first,
               let icon = WeatherIconManager(rawValue: weather.icon) else { return }
