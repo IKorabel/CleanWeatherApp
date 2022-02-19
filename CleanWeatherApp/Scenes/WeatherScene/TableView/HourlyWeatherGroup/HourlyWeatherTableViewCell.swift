@@ -41,6 +41,8 @@ class HourlyWeatherTableViewCell: UITableViewCell {
     func configureCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.backgroundColor = .clear
+        collectionView.layer.cornerRadius = 20
         collectionView.register(HourlyWeatherCollectionViewCell.self,
                                 forCellWithReuseIdentifier: CellIdentifiers.hourlyWeatherCollectionViewCell)
     }
@@ -53,8 +55,8 @@ class HourlyWeatherTableViewCell: UITableViewCell {
     }
     
     func setCellSettings() {
-        collectionView.backgroundColor = .clear
-        backgroundColor = .clear
+        layer.cornerRadius = 20
+        backgroundColor = UIColor.weatherTableViewBackgroundColor
         selectionStyle = .none
     }
 
@@ -81,6 +83,10 @@ extension HourlyWeatherTableViewCell: UICollectionViewDelegate, UICollectionView
         guard let hourlyCell = collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifiers.hourlyWeatherCollectionViewCell, for: indexPath) as? HourlyWeatherCollectionViewCell else { return UICollectionViewCell() }
         hourlyCell.setHourlyForecast(hourly: hourlyWeather[indexPath.row])
         return hourlyCell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 31
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

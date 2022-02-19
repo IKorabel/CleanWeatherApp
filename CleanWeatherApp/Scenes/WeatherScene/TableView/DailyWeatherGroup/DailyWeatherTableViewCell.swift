@@ -17,10 +17,10 @@ class DailyWeatherTableViewCell: UITableViewCell {
         stackView.distribution = .fillProportionally
         stackView.spacing = 70
         contentView.addSubview(stackView)
-        NSLayoutConstraint.activate([stackView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-                                     stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-                                     stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-                                     stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)])
+        NSLayoutConstraint.activate([stackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 15),
+                                     stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 6),
+                                     stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -6),
+                                     stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15)])
         return stackView
     }()
     
@@ -77,7 +77,6 @@ class DailyWeatherTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
             addViews()
-            //addViewsToMainStackView()
     }
     
     required init?(coder: NSCoder) {
@@ -92,6 +91,19 @@ class DailyWeatherTableViewCell: UITableViewCell {
         maxDailyTempLabel.text = "\(Int(daily.temp.max))°"
         guard let suitableIcon = WeatherIconManager(rawValue: daily.weather.first!.icon) else { return }
         dailyTempIcon.image = suitableIcon.image
+    }
+    
+    func setCornerRadiusOnlyOnTopAndBottom(indexPathForRow: Int) {
+        switch indexPathForRow {
+        case 0:
+            layer.cornerRadius = 20
+            layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        case 7:
+            layer.cornerRadius = 20
+            layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        default:
+            break
+        }
     }
     
     func addViews() {
@@ -109,9 +121,8 @@ class DailyWeatherTableViewCell: UITableViewCell {
     }
     
     private func cellSettings() {
-        layer.cornerRadius = 15
         selectionStyle = .none
-        backgroundColor = .clear
+        backgroundColor = .weatherTableViewBackgroundColor
     }
     
     

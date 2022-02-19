@@ -27,12 +27,14 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
   lazy var weatherTableView: UITableView = {
       let tableView = UITableView(frame: view.frame, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = .clear
+        tableView.separatorColor = .weatherTableViewSeparatorColor
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 5),
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -5)
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
    //   tableView.isHidden = true
         return tableView
@@ -77,7 +79,6 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
         weatherTableView.delegate = self
         weatherTableView.dataSource = self
         weatherTableView.showsVerticalScrollIndicator = false
-        weatherTableView.backgroundColor = .clear
         weatherTableView.register(DailyWeatherTableViewCell.self, forCellReuseIdentifier: CellIdentifiers.dailyWeatherCell)
         weatherTableView.register(HourlyWeatherTableViewCell.self, forCellReuseIdentifier: CellIdentifiers.hourlyWeatherTableViewCell)
         weatherTableView.register(DetailInformationCell.self, forCellReuseIdentifier: CellIdentifiers.detailInformationTableViewCell)
@@ -104,7 +105,6 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
       WeatherApiManager.shared.getWeatherInRegion(lat: "56.79369773409799", long: "60.624700760136335") { [self] info in
           weatherInfo = info
           DispatchQueue.main.async { self.weatherTableView.reloadData() }
-          print("desc: \(DetailWeatherInformationManager(rawValue: 6)!.getDescription(current: weatherInfo!.current))")
       }
   }
     
@@ -159,7 +159,8 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch section {
         case 0:
-            return createWeatherInformationHeaderView()
+            let view = createWeatherInformationHeaderView()
+            return view
         default:
             return nil
         }
@@ -187,6 +188,10 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
         }
     }
     
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.backgroundColor = .clear
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print(tableView.frame.width)
         switch indexPath.section {
@@ -197,6 +202,7 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.dailyWeatherCell) as? DailyWeatherTableViewCell else { return UITableViewCell() }
             cell.setDailyForecast(daily: weatherInfo?.daily[indexPath.row])
+            cell.setCornerRadiusOnlyOnTopAndBottom(indexPathForRow: indexPath.row)
             return cell
         case 2:
             guard let detailInfoCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.detailInformationTableViewCell) as? DetailInformationCell else { return UITableViewCell() }

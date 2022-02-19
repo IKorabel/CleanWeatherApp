@@ -16,10 +16,10 @@ class HourlyWeatherCollectionViewCell: UICollectionViewCell {
         stackview.spacing = 21
         stackview.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(stackview)
-        NSLayoutConstraint.activate([stackview.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+        NSLayoutConstraint.activate([stackview.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
                                      stackview.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-                                     stackview.topAnchor.constraint(equalTo: contentView.topAnchor),
-                                     stackview.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)])
+                                     stackview.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+                                     stackview.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15)])
         return stackview
     }()
     
@@ -80,6 +80,6 @@ class HourlyWeatherCollectionViewCell: UICollectionViewCell {
     }
     
     func setSettingsToCell() {
-        backgroundColor = .clear
+        backgroundColor = .weatherTableViewBackgroundColor
     }
 }

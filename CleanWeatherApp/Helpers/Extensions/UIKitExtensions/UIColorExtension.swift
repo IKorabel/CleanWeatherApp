@@ -30,5 +30,17 @@ static func hexStringToUIColor (hex:String) -> UIColor {
         alpha: CGFloat(1.0)
     )
 }
+    
+    static var weatherTableViewBackgroundColor: UIColor {
+        return UIColor.hexStringToUIColor(hex: "2D3340")  
+    }
+    
+    static var cellTitleColor: UIColor {
+        return .hexStringToUIColor(hex: "636972")
+    }
+    
+    static var weatherTableViewSeparatorColor: UIColor {
+        return .hexStringToUIColor(hex: "90949B")
+    }
 }
 

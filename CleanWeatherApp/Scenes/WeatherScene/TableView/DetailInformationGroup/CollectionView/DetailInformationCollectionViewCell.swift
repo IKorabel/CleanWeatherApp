@@ -13,6 +13,9 @@ class DetailInformationCollectionViewCell: UICollectionViewCell {
     lazy var cellHeader: ASLabelWithIcon = {
         let stackview = ASLabelWithIcon()
         contentView.addSubview(stackview)
+        NSLayoutConstraint.activate([stackview.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+                                     stackview.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+                                     stackview.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12)])
         return stackview
     }()
     
@@ -20,14 +23,14 @@ class DetailInformationCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 35, weight: .regular)
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.numberOfLines = 0
         label.textColor = .white
         label.text = "_ _"
         contentView.addSubview(label)
-        NSLayoutConstraint.activate([label.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+        NSLayoutConstraint.activate([label.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
                                      label.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-                                     label.topAnchor.constraint(equalTo: contentView.topAnchor),
+                                     label.topAnchor.constraint(equalTo: cellHeader.topAnchor, constant: 5),
                                      label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)])
         return label
     }()
@@ -50,7 +53,7 @@ class DetailInformationCollectionViewCell: UICollectionViewCell {
     
     func setCellSettings() {
         layer.cornerRadius = 15
-        backgroundView = createASBlurEffect()
+        backgroundColor = .weatherTableViewBackgroundColor
     }
     
     func setElements() {

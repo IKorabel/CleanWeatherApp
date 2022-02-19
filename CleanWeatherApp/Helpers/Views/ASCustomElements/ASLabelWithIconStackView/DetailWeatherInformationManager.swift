@@ -44,7 +44,7 @@ enum DetailWeatherInformationManager: Int {
         case .sunrise: return current.sunrise.convertUnixTimeToDateAndTime().convertTimeToString()
         case .wind:  return "\(Measurement(value: current.wind_speed, unit: UnitSpeed.metersPerSecond))"
         case .sunset: return current.sunset.convertUnixTimeToDateAndTime().convertTimeToString()
-        case .feelsLike: return "\(Measurement(value: current.feels_like, unit: UnitTemperature.celsius))"
+        case .feelsLike: return "\(Measurement(value: current.feels_like.rounded(), unit: UnitTemperature.celsius))"
         case .humidity: return String(format: "%.2f%%", current.humidity)
         }
     }

@@ -14,6 +14,6 @@ extension String {
             guard self.count > symbols else {
                 return self
             }
-            return self.prefix(symbols).uppercased()
+        return self.prefix(symbols).uppercased()
         }
 }
