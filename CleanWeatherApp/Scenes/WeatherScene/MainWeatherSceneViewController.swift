@@ -82,6 +82,7 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
         weatherTableView.register(DailyWeatherTableViewCell.self, forCellReuseIdentifier: CellIdentifiers.dailyWeatherCell)
         weatherTableView.register(HourlyWeatherTableViewCell.self, forCellReuseIdentifier: CellIdentifiers.hourlyWeatherTableViewCell)
         weatherTableView.register(DetailInformationCell.self, forCellReuseIdentifier: CellIdentifiers.detailInformationTableViewCell)
+        weatherTableView.register(ASSectionHeader.self, forHeaderFooterViewReuseIdentifier: ASSectionHeader.reuseIdentifier)
     }
     
     
@@ -162,7 +163,8 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
             let view = createWeatherInformationHeaderView()
             return view
         default:
-            return nil
+            guard let sectionHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: ASSectionHeader.reuseIdentifier) as? ASSectionHeader else { return nil }
+            return sectionHeader
         }
     }
     
@@ -186,10 +188,6 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
         default:
             return 0
         }
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        view.backgroundColor = .clear
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

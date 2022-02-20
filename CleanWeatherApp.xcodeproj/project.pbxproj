@@ -46,6 +46,7 @@
 		A2C2D91827B48254005263D4 /* DetailInformationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C2D91727B48254005263D4 /* DetailInformationCell.swift */; };
 		A2C5E27B27C2EB4100CDF35C /* ParticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C5E27A27C2EB4100CDF35C /* ParticleView.swift */; };
 		A2C5E27D27C2F1FB00CDF35C /* GroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C5E27C27C2F1FB00CDF35C /* GroundView.swift */; };
+		A2C5E28127C2F6A100CDF35C /* ASSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C5E28027C2F6A100CDF35C /* ASSectionHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +91,7 @@
 		A2C2D91727B48254005263D4 /* DetailInformationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInformationCell.swift; sourceTree = "<group>"; };
 		A2C5E27A27C2EB4100CDF35C /* ParticleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleView.swift; sourceTree = "<group>"; };
 		A2C5E27C27C2F1FB00CDF35C /* GroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroundView.swift; sourceTree = "<group>"; };
+		A2C5E28027C2F6A100CDF35C /* ASSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASSectionHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,6 +302,7 @@
 		A2B5A2B427B538BC00147FB8 /* ASCustomElements */ = {
 			isa = PBXGroup;
 			children = (
+				A2C5E27F27C2F65F00CDF35C /* ASSectionHeader */,
 				A2B5A2B727B53C6F00147FB8 /* ASLabelWithIconStackView */,
 			);
 			path = ASCustomElements;
@@ -364,6 +367,14 @@
 				A2C5E27C27C2F1FB00CDF35C /* GroundView.swift */,
 			);
 			path = PrecipitationViews;
+			sourceTree = "<group>";
+		};
+		A2C5E27F27C2F65F00CDF35C /* ASSectionHeader */ = {
+			isa = PBXGroup;
+			children = (
+				A2C5E28027C2F6A100CDF35C /* ASSectionHeader.swift */,
+			);
+			path = ASSectionHeader;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -447,6 +458,7 @@
 				A2884C6827138DCF005CEA95 /* CleanWeatherApp.xcdatamodeld in Sources */,
 				A202822827B327AD00408BB3 /* MainWeatherBackgroundTheme.swift in Sources */,
 				A281458927A1B0CB00CFC681 /* MainWeatherSceneModels.swift in Sources */,
+				A2C5E28127C2F6A100CDF35C /* ASSectionHeader.swift in Sources */,
 				A202821A27B2BB7B00408BB3 /* UIColorExtension.swift in Sources */,
 				A2C2D91427B472C1005263D4 /* UITableViewCellExtension.swift in Sources */,
 				A2C5E27B27C2EB4100CDF35C /* ParticleView.swift in Sources */,
