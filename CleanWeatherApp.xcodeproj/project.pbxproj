@@ -44,6 +44,8 @@
 		A2C2D91227B40B0B005263D4 /* HourlyWeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C2D91127B40B0B005263D4 /* HourlyWeatherTableViewCell.swift */; };
 		A2C2D91427B472C1005263D4 /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C2D91327B472C1005263D4 /* UITableViewCellExtension.swift */; };
 		A2C2D91827B48254005263D4 /* DetailInformationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C2D91727B48254005263D4 /* DetailInformationCell.swift */; };
+		A2C5E27B27C2EB4100CDF35C /* ParticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C5E27A27C2EB4100CDF35C /* ParticleView.swift */; };
+		A2C5E27D27C2F1FB00CDF35C /* GroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C5E27C27C2F1FB00CDF35C /* GroundView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +88,8 @@
 		A2C2D91127B40B0B005263D4 /* HourlyWeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyWeatherTableViewCell.swift; sourceTree = "<group>"; };
 		A2C2D91327B472C1005263D4 /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
 		A2C2D91727B48254005263D4 /* DetailInformationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInformationCell.swift; sourceTree = "<group>"; };
+		A2C5E27A27C2EB4100CDF35C /* ParticleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleView.swift; sourceTree = "<group>"; };
+		A2C5E27C27C2F1FB00CDF35C /* GroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroundView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +124,7 @@
 		A202821327B2A02300408BB3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A2C5E27E27C2F48000CDF35C /* PrecipitationViews */,
 				A2B5A2B427B538BC00147FB8 /* ASCustomElements */,
 				A202821427B2A03600408BB3 /* GradientView.swift */,
 			);
@@ -352,6 +357,15 @@
 			path = DetailInformationGroup;
 			sourceTree = "<group>";
 		};
+		A2C5E27E27C2F48000CDF35C /* PrecipitationViews */ = {
+			isa = PBXGroup;
+			children = (
+				A2C5E27A27C2EB4100CDF35C /* ParticleView.swift */,
+				A2C5E27C27C2F1FB00CDF35C /* GroundView.swift */,
+			);
+			path = PrecipitationViews;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -435,6 +449,7 @@
 				A281458927A1B0CB00CFC681 /* MainWeatherSceneModels.swift in Sources */,
 				A202821A27B2BB7B00408BB3 /* UIColorExtension.swift in Sources */,
 				A2C2D91427B472C1005263D4 /* UITableViewCellExtension.swift in Sources */,
+				A2C5E27B27C2EB4100CDF35C /* ParticleView.swift in Sources */,
 				A2B5A2BC27B5799A00147FB8 /* UVIndexExtension.swift in Sources */,
 				A281459427A2E27800CFC681 /* UIViewExtension.swift in Sources */,
 				A202821527B2A03600408BB3 /* GradientView.swift in Sources */,
@@ -451,6 +466,7 @@
 				A265D61C27A19DEA00B511D0 /* Weather.swift in Sources */,
 				A202822527B3215A00408BB3 /* ExtensionString.swift in Sources */,
 				A281458A27A1B0CB00CFC681 /* MainWeatherSceneViewController.swift in Sources */,
+				A2C5E27D27C2F1FB00CDF35C /* GroundView.swift in Sources */,
 				A281458827A1B0CB00CFC681 /* MainWeatherSceneRouter.swift in Sources */,
 				A281458627A1B0CB00CFC681 /* MainWeatherScenePresenter.swift in Sources */,
 				A2B5A2B327B537BD00147FB8 /* DetailInformationCollectionViewCell.swift in Sources */,

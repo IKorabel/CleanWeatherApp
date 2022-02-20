@@ -66,6 +66,36 @@ class LinearGradientView: UIView {
         gradientLayer.startPoint = Point.topLeading.point
         gradientLayer.endPoint = Point.bottomTrailing.point
         layer.addSublayer(gradientLayer)
+        createPrecipitationView()
+        createGroundView()
+    }
+    
+    func createPrecipitationView() {
+        let snow = ParticleView()
+        snow.particleImage = UIImage(named: "snow-particle")
+        snow.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(snow)
+        NSLayoutConstraint.activate([
+            snow.leadingAnchor.constraint(equalTo: leadingAnchor),
+            snow.trailingAnchor.constraint(equalTo: trailingAnchor),
+            snow.topAnchor.constraint(equalTo: topAnchor),
+            snow.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+    }
+    
+    func createGroundView() {
+        let ground = GroundView()
+        ground.path = ground.makeGround()
+        ground.strokeColor = .white
+        ground.fillColor = .white
+        ground.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(ground)
+        NSLayoutConstraint.activate([
+            ground.leadingAnchor.constraint(equalTo: leadingAnchor),
+            ground.trailingAnchor.constraint(equalTo: trailingAnchor),
+            ground.bottomAnchor.constraint(equalTo: bottomAnchor),
+            ground.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.2)
+        ])
     }
     
     override open func layoutSubviews() {
