@@ -82,7 +82,6 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
         weatherTableView.register(DailyWeatherTableViewCell.self, forCellReuseIdentifier: CellIdentifiers.dailyWeatherCell)
         weatherTableView.register(HourlyWeatherTableViewCell.self, forCellReuseIdentifier: CellIdentifiers.hourlyWeatherTableViewCell)
         weatherTableView.register(DetailInformationCell.self, forCellReuseIdentifier: CellIdentifiers.detailInformationTableViewCell)
-        weatherTableView.register(ASSectionHeader.self, forHeaderFooterViewReuseIdentifier: ASSectionHeader.reuseIdentifier)
     }
     
     
@@ -162,16 +161,34 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
         case 0:
             let view = createWeatherInformationHeaderView()
             return view
-        default:
-            guard let sectionHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: ASSectionHeader.reuseIdentifier) as? ASSectionHeader else { return nil }
+        case 1:
+            let sectionHeader = ASSectionHeader(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50),
+                                                sectionTitle: ASLabelTitle.dailyForecast)
             return sectionHeader
+        default:
+            return nil
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 1:
+            guard let dailyWeather = weatherInfo?.daily else { return }
+            if indexPath.row == dailyWeather.count - 1 {
+                // rounded
+            }
+        default:
+            break
         }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
+        switch section {
+        case 0:
             return view.frame.size.width
-        } else {
+        case 1:
+            return 50
+        default:
             return 0
         }
     }

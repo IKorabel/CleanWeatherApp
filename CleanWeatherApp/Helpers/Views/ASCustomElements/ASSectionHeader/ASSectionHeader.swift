@@ -7,39 +7,48 @@
 
 import UIKit
 
-class ASSectionHeader: UITableViewHeaderFooterView {
+class ASSectionHeader: UIView {
     
-    static let reuseIdentifier = "ASSectionHeader"
-    
-    lazy var labelWithIcon: ASLabelWithIcon = {
-        let labelWithIcon = ASLabelWithIcon(row: 0)
+    lazy var labelWithIcon: ASLabel = {
+        let labelWithIcon = ASLabel()
         labelWithIcon.translatesAutoresizingMaskIntoConstraints = false
         return labelWithIcon
     }()
     
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
-        setShape()
-        setView()
+    override init(frame: CGRect) {
+       super.init(frame: frame)
+         commonInit()
+     }
+     
+     required init?(coder aDecoder: NSCoder) {
+       super.init(coder: aDecoder)
+       commonInit()
+     }
+    
+    convenience init(frame: CGRect, sectionTitle: ASLabelTitle) {
+        self.init(frame: frame)
+        labelWithIcon.setTitleWithIcon(labelContent: sectionTitle.labelContent)
+    }
+        
+    private func setView(labelContent: ASLabelContent) {
+        labelWithIcon.setTitleWithIcon(labelContent: labelContent)
+        commonInit()
     }
     
-    func setView() {
+    func commonInit() {
+        setShape()
         addSubview(labelWithIcon)
         NSLayoutConstraint.activate([
-            labelWithIcon.leftAnchor.constraint(equalTo: leftAnchor),
+            labelWithIcon.leftAnchor.constraint(equalTo: leftAnchor, constant: 15),
             labelWithIcon.rightAnchor.constraint(equalTo: rightAnchor),
-            labelWithIcon.topAnchor.constraint(equalTo: topAnchor),
+            labelWithIcon.topAnchor.constraint(equalTo: topAnchor, constant: 6),
             labelWithIcon.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     
-    func setShape() {
-        layer.cornerRadius = 20
-    }
-    
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    private func setShape() {
+        makeRoundedtTopCorners(radius: 20)
+        backgroundColor = .weatherTableViewBackgroundColor
     }
     
 }

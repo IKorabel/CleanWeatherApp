@@ -25,11 +25,9 @@ extension UIView {
         layer.borderColor = UIColor.white.cgColor
     }
     
-    func roundCorners(corners: UIRectCorner, radius: CGFloat) {
-            let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-            let mask = CAShapeLayer()
-            mask.path = path.cgPath
-            layer.mask = mask
-        }
+    func makeRoundedtTopCorners(radius: CGFloat) {
+        layer.cornerRadius = radius
+        layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+    }
     
 }

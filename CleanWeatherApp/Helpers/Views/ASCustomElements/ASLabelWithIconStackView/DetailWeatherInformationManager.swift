@@ -16,25 +16,20 @@ enum DetailWeatherInformationManager: Int {
     case feelsLike = 5
     case humidity = 6
     
-    var title: String {
+    var labelContent: ASLabelContent {
         switch self {
-        case .uvIndex: return "UV INDEX"
-        case .sunrise: return "SUNRISE"
-        case .wind: return "WIND"
-        case .sunset: return "SUNSET"
-        case .feelsLike: return "FEELS LIKE"
-        case .humidity: return "HUMIDITY"
-        }
-    }
-    
-    var icon: UIImage {
-        switch self {
-        case .uvIndex: return UIImage(named: "avindex")!
-        case .sunrise: return UIImage(named: "sunrise")!
-        case .wind: return UIImage(named: "wind1")!
-        case .sunset: return UIImage(named: "rainfall")!
-        case .feelsLike: return UIImage(named: "feelsLiike")!
-        case .humidity: return UIImage(named: "humidity")!
+        case .uvIndex:
+            return ASLabelContent(title: "UV INDEX", image: UIImage(named: "avindex")!)
+        case .sunrise:
+            return ASLabelContent(title: "SUNRISE", image: UIImage(named: "sunrise")!)
+        case .wind:
+            return ASLabelContent(title: "WIND", image: UIImage(named: "wind1")!)
+        case .sunset:
+            return ASLabelContent(title: "SUNSET", image: UIImage(named: "rainfall")!)
+        case .feelsLike:
+            return ASLabelContent(title: "FEELS LIKE", image: UIImage(named: "feelsLiike")!)
+        case .humidity:
+            return ASLabelContent(title: "HUMIDITY", image: UIImage(named: "humidity")!)
         }
     }
     

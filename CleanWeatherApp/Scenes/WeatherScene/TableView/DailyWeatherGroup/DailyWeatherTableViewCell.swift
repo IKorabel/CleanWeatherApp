@@ -95,10 +95,10 @@ class DailyWeatherTableViewCell: UITableViewCell {
     
     func setCornerRadiusOnlyOnTopAndBottom(indexPathForRow: Int) {
         switch indexPathForRow {
-        case 0:
-            layer.cornerRadius = 20
-            layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        case 7:
+//        case 0:
+//            layer.cornerRadius = 20
+//            layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        case 10:
             layer.cornerRadius = 20
             layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         default:

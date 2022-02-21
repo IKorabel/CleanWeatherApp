@@ -7,13 +7,14 @@
 
 import UIKit
 
-class ASLabelWithIcon: UIStackView {
+class ASLabel: UIStackView {
 
     lazy var icon: UIImageView = {
         let icon = UIImageView()
         icon.translatesAutoresizingMaskIntoConstraints = false
         icon.contentMode = .scaleAspectFit
         icon.tintColor = .cellTitleColor
+        icon.image = UIImage(named: "sunrise")
         NSLayoutConstraint.activate([icon.widthAnchor.constraint(equalToConstant: 19),
                                      icon.heightAnchor.constraint(equalToConstant: 18)])
         return icon
@@ -24,6 +25,7 @@ class ASLabelWithIcon: UIStackView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .cellTitleColor
         label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        label.text = "__"
         label.text = label.text?.uppercased()
         return label
     }()
@@ -33,9 +35,9 @@ class ASLabelWithIcon: UIStackView {
         commonInit()
     }
     
-    func setTitleWithIcon(information: DetailWeatherInformationManager) {
-        icon.image = information.icon
-        label.text = information.title
+    func setTitleWithIcon(labelContent: ASLabelContent) {
+        icon.image = labelContent.image
+        label.text = labelContent.title
         commonInit()
     }
     
@@ -53,3 +55,4 @@ class ASLabelWithIcon: UIStackView {
     }
 
 }
+

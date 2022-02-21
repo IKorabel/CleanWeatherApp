@@ -10,8 +10,8 @@ import UIKit
 class DetailInformationCollectionViewCell: UICollectionViewCell {
 
     
-    lazy var cellHeader: ASLabelWithIcon = {
-        let stackview = ASLabelWithIcon()
+    lazy var cellHeader: ASLabel = {
+        let stackview = ASLabel()
         contentView.addSubview(stackview)
         NSLayoutConstraint.activate([stackview.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
                                      stackview.rightAnchor.constraint(equalTo: contentView.rightAnchor),
@@ -47,7 +47,7 @@ class DetailInformationCollectionViewCell: UICollectionViewCell {
     func setDetailInformation(currentInfo: Current?,index: Int) {
         guard let detailInformation = DetailWeatherInformationManager(rawValue: index) else { return }
         guard let currentInformation = currentInfo else { return }
-        cellHeader.setTitleWithIcon(information: detailInformation)
+        cellHeader.setTitleWithIcon(labelContent: detailInformation.labelContent)
         descriptionLabel.text = detailInformation.getDescription(current: currentInformation)
     }
     
