@@ -98,7 +98,7 @@ class DailyWeatherTableViewCell: UITableViewCell {
 //        case 0:
 //            layer.cornerRadius = 20
 //            layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        case 10:
+        case 7:
             layer.cornerRadius = 20
             layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         default:

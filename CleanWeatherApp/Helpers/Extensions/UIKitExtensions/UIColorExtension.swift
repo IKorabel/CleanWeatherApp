@@ -42,5 +42,8 @@ static func hexStringToUIColor (hex:String) -> UIColor {
     static var weatherTableViewSeparatorColor: UIColor {
         return .hexStringToUIColor(hex: "90949B")
     }
+    static var rainColor: UIColor {
+        return .hexStringToUIColor(hex: "8B91FF")
+    }
 }
 

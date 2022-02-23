@@ -14,7 +14,7 @@ enum DetailWeatherInformationManager: Int {
     case wind = 1
     case sunset = 3
     case feelsLike = 5
-    case humidity = 6
+    case humidity = 4
     
     var labelContent: ASLabelContent {
         switch self {
@@ -23,9 +23,9 @@ enum DetailWeatherInformationManager: Int {
         case .sunrise:
             return ASLabelContent(title: "SUNRISE", image: UIImage(named: "sunrise")!)
         case .wind:
-            return ASLabelContent(title: "WIND", image: UIImage(named: "wind1")!)
+            return ASLabelContent(title: "WIND", image: UIImage(named: "wind1 1")!)
         case .sunset:
-            return ASLabelContent(title: "SUNSET", image: UIImage(named: "rainfall")!)
+            return ASLabelContent(title: "SUNSET", image: UIImage(named: "sunset 1")!)
         case .feelsLike:
             return ASLabelContent(title: "FEELS LIKE", image: UIImage(named: "feelsLiike")!)
         case .humidity:

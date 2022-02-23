@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "calendar1@2x 1@2x.png",
+      "filename" : "tshirt 1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "calendar1@2x 1.png",
+      "filename" : "tshirt 1@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "calendar1@2x 1@3x.png",
+      "filename" : "tshirt 1@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

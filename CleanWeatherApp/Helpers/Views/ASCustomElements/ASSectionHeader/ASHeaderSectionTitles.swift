@@ -15,8 +15,10 @@ enum ASLabelTitle {
     
     var labelContent: ASLabelContent {
         switch self {
-        case .dailyForecast, .clothes:
+        case .dailyForecast:
             return ASLabelContent(title: "7-DAY FORECAST", image: UIImage(named: "Calendar")!)
+        case .clothes:
+            return ASLabelContent(title: "OUTFIT", image: UIImage(named: "clothes")!)
         case .weather(let information):
             return information.labelContent
         }

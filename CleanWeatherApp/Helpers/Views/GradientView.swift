@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SpriteKit
 import UIKit
 
 class LinearGradientView: UIView {
@@ -61,17 +62,20 @@ class LinearGradientView: UIView {
     }
     
     private func commonInit() {
-        let themeGradientColor = Date().defineDayPhase().themeGradientColors
+        //let themeGradientColor = Date().defineDayPhase().themeGradientColors
+        let themeGradientColor = MainWeatherBackgroundTheme.day(precipitation: .snow).themeGradientColors
         gradientLayer.colors = [themeGradientColor.firstGradientColor.cgColor, themeGradientColor.secondGradientColor.cgColor]
         gradientLayer.startPoint = Point.topLeading.point
         gradientLayer.endPoint = Point.bottomTrailing.point
         layer.addSublayer(gradientLayer)
+   //     createAnimationScene()
         createPrecipitationView()
         createGroundView()
     }
     
+    
     func createPrecipitationView() {
-        let snow = ParticleView()
+        let snow = ParticleView(precipitation: .snow)
         snow.particleImage = UIImage(named: "snow-particle")
         snow.translatesAutoresizingMaskIntoConstraints = false
         addSubview(snow)
@@ -81,6 +85,24 @@ class LinearGradientView: UIView {
             snow.topAnchor.constraint(equalTo: topAnchor),
             snow.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+    }
+    
+    func createAnimationScene() {
+        guard let emitterNode = SKEmitterNode(fileNamed: "Rain.sks") else {
+            print("isn't displayingi")
+            return
+        }
+        let skView = SKView(frame: frame)
+        skView.backgroundColor = .clear
+        let scene = SKScene(size: frame.size)
+        scene.backgroundColor = .clear
+        skView.presentScene(scene)
+        skView.isUserInteractionEnabled = false
+        scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        scene.addChild(emitterNode)
+        emitterNode.position.y = scene.frame.maxY
+        emitterNode.particlePositionRange.dx = scene.frame.width
+        addSubview(skView)
     }
     
     func createGroundView() {

@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import SpriteKit
 
 protocol MainWeatherSceneDisplayLogic
 {
@@ -23,6 +24,8 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
   var router: (NSObjectProtocol & MainWeatherSceneRoutingLogic & MainWeatherSceneDataPassing)?
     
   var weatherInfo: WeatherInformation?
+    
+  var currentTableAnimation: TableAnimation = .fadeIn(duration: 0.85, delay: 0.03)
     
   lazy var weatherTableView: UITableView = {
       let tableView = UITableView(frame: view.frame, style: .grouped)
@@ -82,6 +85,7 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
         weatherTableView.register(DailyWeatherTableViewCell.self, forCellReuseIdentifier: CellIdentifiers.dailyWeatherCell)
         weatherTableView.register(HourlyWeatherTableViewCell.self, forCellReuseIdentifier: CellIdentifiers.hourlyWeatherTableViewCell)
         weatherTableView.register(DetailInformationCell.self, forCellReuseIdentifier: CellIdentifiers.detailInformationTableViewCell)
+        weatherTableView.register(ClothesInformationTableViewCell.self, forCellReuseIdentifier: CellIdentifiers.clothesTableViewCell)
     }
     
     
@@ -104,7 +108,9 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
       configureTableView()
       WeatherApiManager.shared.getWeatherInRegion(lat: "56.79369773409799", long: "60.624700760136335") { [self] info in
           weatherInfo = info
-          DispatchQueue.main.async { self.weatherTableView.reloadData() }
+          DispatchQueue.main.async {
+              self.weatherTableView.reloadData()
+          }
       }
   }
     
@@ -134,7 +140,8 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
 extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDelegate {
     
     func createWeatherInformationHeaderView() -> UIView {
-        let weatherInformationHeader = MainWeatherInfoHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.width), weatherInformation: weatherInfo)
+        let weatherInformationHeader = MainWeatherInfoHeaderView(
+            frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.width), weatherInformation: weatherInfo)
         return weatherInformationHeader
     }
     
@@ -143,9 +150,11 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
         case 0:
             return 1
         case 1:
-          return weatherInfo?.daily.count ?? 0
-        case 2:
           return 1
+        case 2:
+          return weatherInfo?.daily.count ?? 0
+        case 3:
+           return 1
         default:
            return 0
         }
@@ -153,7 +162,7 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
 
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -161,9 +170,10 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
         case 0:
             let view = createWeatherInformationHeaderView()
             return view
-        case 1:
+        case 1...2:
+            let sectionTitles = [ASLabelTitle.clothes, ASLabelTitle.dailyForecast]
             let sectionHeader = ASSectionHeader(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50),
-                                                sectionTitle: ASLabelTitle.dailyForecast)
+                                                sectionTitle: sectionTitles[section - 1])
             return sectionHeader
         default:
             return nil
@@ -171,22 +181,19 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case 1:
-            guard let dailyWeather = weatherInfo?.daily else { return }
-            if indexPath.row == dailyWeather.count - 1 {
-                // rounded
-            }
-        default:
-            break
-        }
+        cell.alpha = 0
+        let animation = currentTableAnimation.getAnimation()
+        let animator = TableViewAnimator(animation: animation)
+        animator.animate(cell: cell, at: indexPath, in: tableView)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
         case 0:
             return view.frame.size.width
-        case 1:
+        case 1...2:
+            return 50
+        case 3:
             return 50
         default:
             return 0
@@ -198,8 +205,10 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
         case 0:
             return 147
         case 1:
-            return 55
+            return 147
         case 2:
+            return 55
+        case 3:
             guard weatherInfo?.current != nil else { return 0 }
             return 509
         default:
@@ -215,11 +224,13 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
             hourlyWeatherCell.setHourlyForecast(hourlyForecast: weatherInfo?.hourly ?? [])
             return hourlyWeatherCell
         case 1:
+            guard let clothesCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.clothesTableViewCell) as? ClothesInformationTableViewCell else { return UITableViewCell() }
+            return clothesCell
+        case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.dailyWeatherCell) as? DailyWeatherTableViewCell else { return UITableViewCell() }
             cell.setDailyForecast(daily: weatherInfo?.daily[indexPath.row])
-            cell.setCornerRadiusOnlyOnTopAndBottom(indexPathForRow: indexPath.row)
             return cell
-        case 2:
+        case 3:
             guard let detailInfoCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.detailInformationTableViewCell) as? DetailInformationCell else { return UITableViewCell() }
             detailInfoCell.setCurrentWeather(current: weatherInfo?.current)
             return detailInfoCell

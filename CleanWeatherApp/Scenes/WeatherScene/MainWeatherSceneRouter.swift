@@ -46,11 +46,11 @@ class MainWeatherSceneRouter: NSObject, MainWeatherSceneRoutingLogic, MainWeathe
 
   // MARK: Navigation
   
-  //func navigateToSomewhere(source: MainWeatherSceneViewController, destination: SomewhereViewController)
-  //{
-  //  source.show(destination, sender: nil)
-  //}
-  
+//  func navigateToSomewhere(source: MainWeatherSceneViewController, destination: SomewhereViewController)
+//  {
+//    source.show(destination, sender: nil)
+//  }
+//  
   // MARK: Passing data
   
   //func passDataToSomewhere(source: MainWeatherSceneDataStore, destination: inout SomewhereDataStore)
