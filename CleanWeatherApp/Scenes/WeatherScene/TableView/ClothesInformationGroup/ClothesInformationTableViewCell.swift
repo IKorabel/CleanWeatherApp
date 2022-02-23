@@ -15,6 +15,24 @@ class ClothesInformationTableViewCell: UITableViewCell {
         clothesStackView.distribution = .fillEqually
         return clothesStackView
     }()
+    
+    lazy var outerwearImage: UIImageView = {
+        let outerwearImage = UIImageView()
+        outerwearImage.contentMode = .scaleAspectFit
+        return outerwearImage
+    }()
+    
+    lazy var trousersImage: UIImageView = {
+        let trousersImage = UIImageView()
+        trousersImage.contentMode = .scaleAspectFit
+        return trousersImage
+    }()
+    
+    lazy var bootsImage: UIImageView = {
+        let bootsImage = UIImageView()
+        bootsImage.contentMode = .scaleAspectFit
+        return bootsImage
+    }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,6 +41,13 @@ class ClothesInformationTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setOutfit(currentWeather: Current?) {
+        guard let currentWeather = currentWeather else {
+            return
+        }
+        print("Outfit: \(currentWeather.getOutfit())")
     }
     
     func addViews() {

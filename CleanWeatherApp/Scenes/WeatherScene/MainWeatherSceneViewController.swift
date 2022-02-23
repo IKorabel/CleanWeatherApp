@@ -24,14 +24,13 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
   var router: (NSObjectProtocol & MainWeatherSceneRoutingLogic & MainWeatherSceneDataPassing)?
     
   var weatherInfo: WeatherInformation?
-    
-  var currentTableAnimation: TableAnimation = .fadeIn(duration: 0.85, delay: 0.03)
-    
+
   lazy var weatherTableView: UITableView = {
       let tableView = UITableView(frame: view.frame, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .clear
         tableView.separatorColor = .weatherTableViewSeparatorColor
+        tableView.alpha = 0
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 5),
@@ -39,7 +38,6 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-   //   tableView.isHidden = true
         return tableView
 }()
     
@@ -109,14 +107,18 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
       WeatherApiManager.shared.getWeatherInRegion(lat: "56.79369773409799", long: "60.624700760136335") { [self] info in
           weatherInfo = info
           DispatchQueue.main.async {
-              self.weatherTableView.reloadData()
+             self.weatherTableView.reloadData()
           }
       }
   }
     
   override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//    view.setGradient(startPoint: .topLeading, endPoint: .bottomTrailing)
+      UIView.animate(withDuration: 0.85, delay: 0.03, options: .curveEaseIn) { [self] in
+          weatherTableView.alpha = 0
+      } completion: { [self] success in
+          weatherTableView.alpha = 1
+      }
   }
 
     
@@ -181,10 +183,10 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.alpha = 0
-        let animation = currentTableAnimation.getAnimation()
-        let animator = TableViewAnimator(animation: animation)
-        animator.animate(cell: cell, at: indexPath, in: tableView)
+   //     cell.alpha = 0
+       // let animation = currentTableAnimation.getAnimation()
+   //     let animator = TableViewAnimator(animation: animation)
+    //    animator.animate(cell: cell, at: indexPath, in: tableView)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -225,6 +227,7 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
             return hourlyWeatherCell
         case 1:
             guard let clothesCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.clothesTableViewCell) as? ClothesInformationTableViewCell else { return UITableViewCell() }
+            clothesCell.setOutfit(currentWeather: weatherInfo?.current)
             return clothesCell
         case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.dailyWeatherCell) as? DailyWeatherTableViewCell else { return UITableViewCell() }

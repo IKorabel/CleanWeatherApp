@@ -55,6 +55,42 @@ struct Current: Codable {
     let wind_speed: Double
     let wind_deg: Int
     let weather: [Weather]
+    
+    
+    func getOutfit() -> Outfit {
+        let feelsLike = Int(feels_like)
+        return Outfit(outerwearImage: getOuterwearOutfit(feelsLike: feelsLike),
+                      trousersImage: getTrousersOutfit(feelsLike: feelsLike),
+                      bootsImage: getBootsOutfit(feelsLike: feelsLike))
+    }
+    
+    func getOuterwearOutfit(feelsLike: Int) -> OutfitEnum {
+        switch feelsLike {
+        case Int.min...(6): return .outerwear(typeOfClothing: .downJacket)
+        case 7...15: return .outerwear(typeOfClothing: .jacket)
+        case 16...25: return .outerwear(typeOfClothing: .hoody)
+        case 26...Int.max: return .outerwear(typeOfClothing: .shirt)
+        default: return .outerwear(typeOfClothing: .jacket)
+        }
+    }
+    
+    func getTrousersOutfit(feelsLike: Int) -> OutfitEnum {
+        switch feelsLike {
+        case Int.min...(-2): return .trousers(typeOfClothing: .winterPants)
+        case 1...23: return .trousers(typeOfClothing: .jeans)
+        case 24...Int.max: return .trousers(typeOfClothing: .shorts)
+        default: return .trousers(typeOfClothing: .jeans)
+        }
+    }
+    
+    func getBootsOutfit(feelsLike: Int) -> OutfitEnum {
+        switch feelsLike {
+        case Int.min...(-10): return .boots(typeOfClothing: .winterBoots)
+        case -9...25: return .boots(typeOfClothing: .sneakers)
+        case 26...Int.max: return .boots(typeOfClothing: .shales)
+        default: return .boots(typeOfClothing: .winterBoots)
+        }
+    }
 }
 
 struct Weather: Codable {
