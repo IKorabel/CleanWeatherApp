@@ -59,9 +59,9 @@ struct Current: Codable {
     
     func getOutfit() -> Outfit {
         let feelsLike = Int(feels_like)
-        return Outfit(outerwearImage: getOuterwearOutfit(feelsLike: feelsLike),
-                      trousersImage: getTrousersOutfit(feelsLike: feelsLike),
-                      bootsImage: getBootsOutfit(feelsLike: feelsLike))
+        return Outfit(outerwearImage: getOuterwearOutfit(feelsLike: feelsLike).image,
+                      trousersImage: getTrousersOutfit(feelsLike: feelsLike).image,
+                      bootsImage: getBootsOutfit(feelsLike: feelsLike).image)
     }
     
     func getOuterwearOutfit(feelsLike: Int) -> OutfitEnum {

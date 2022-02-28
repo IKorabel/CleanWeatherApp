@@ -13,24 +13,38 @@ class ClothesInformationTableViewCell: UITableViewCell {
         let clothesStackView = UIStackView()
         clothesStackView.axis = .horizontal
         clothesStackView.distribution = .fillEqually
+        clothesStackView.translatesAutoresizingMaskIntoConstraints = false
+        clothesStackView.addArrangedSubview(outerwearImage)
+        clothesStackView.addArrangedSubview(trousersImage)
+        clothesStackView.addArrangedSubview(bootsImage)
+        contentView.addSubview(clothesStackView)
         return clothesStackView
     }()
     
     lazy var outerwearImage: UIImageView = {
         let outerwearImage = UIImageView()
+        outerwearImage.translatesAutoresizingMaskIntoConstraints = false
         outerwearImage.contentMode = .scaleAspectFit
+        contentView.addSubview(outerwearImage)
+        outerwearImage.image = UIImage(named: "clothes")
         return outerwearImage
     }()
     
     lazy var trousersImage: UIImageView = {
         let trousersImage = UIImageView()
         trousersImage.contentMode = .scaleAspectFit
+        trousersImage.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(trousersImage)
+        trousersImage.image = UIImage(named: "clothes")
         return trousersImage
     }()
     
     lazy var bootsImage: UIImageView = {
         let bootsImage = UIImageView()
+        bootsImage.image = UIImage(named: "clothes")
+        bootsImage.translatesAutoresizingMaskIntoConstraints = false
         bootsImage.contentMode = .scaleAspectFit
+        contentView.addSubview(bootsImage)
         return bootsImage
     }()
 
@@ -47,12 +61,17 @@ class ClothesInformationTableViewCell: UITableViewCell {
         guard let currentWeather = currentWeather else {
             return
         }
-        print("Outfit: \(currentWeather.getOutfit())")
+        setOutfitImages(outfit: currentWeather.getOutfit())
+    }
+    
+    func setOutfitImages(outfit: Outfit) {
+        outerwearImage.image = outfit.outerwearImage
+        trousersImage.image = outfit.trousersImage
+        bootsImage.image = outfit.bootsImage
     }
     
     func addViews() {
         addShape()
-        contentView.addSubview(clothesStackView)
         NSLayoutConstraint.activate([
             clothesStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             clothesStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
@@ -64,7 +83,6 @@ class ClothesInformationTableViewCell: UITableViewCell {
     func addShape() {
         makeRoundedBottomCorners(radius: 20)
         selectionStyle = .none
-        clothesStackView.addBorder()
         backgroundColor = .weatherTableViewBackgroundColor
     }
     

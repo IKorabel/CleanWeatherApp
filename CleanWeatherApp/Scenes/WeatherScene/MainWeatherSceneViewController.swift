@@ -110,6 +110,7 @@ class MainWeatherSceneViewController: UIViewController, MainWeatherSceneDisplayL
              self.weatherTableView.reloadData()
           }
       }
+      showAlert(alertType: .geocodingError)
   }
     
   override func viewDidAppear(_ animated: Bool) {
