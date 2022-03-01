@@ -9,44 +9,22 @@ import UIKit
 
 class ClothesInformationTableViewCell: UITableViewCell {
     
-    lazy var clothesStackView: UIStackView = {
-        let clothesStackView = UIStackView()
-        clothesStackView.axis = .horizontal
-        clothesStackView.distribution = .fillEqually
-        clothesStackView.translatesAutoresizingMaskIntoConstraints = false
-        clothesStackView.addArrangedSubview(outerwearImage)
-        clothesStackView.addArrangedSubview(trousersImage)
-        clothesStackView.addArrangedSubview(bootsImage)
-        contentView.addSubview(clothesStackView)
-        return clothesStackView
+    lazy var clothesCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 50, height: 50)
+        layout.sectionInset = UIEdgeInsets(top: 6, left: 0, bottom: 0, right: 0)
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 355, height: 300), collectionViewLayout: layout)
+        collectionView.collectionViewLayout = layout
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.addBorder()
+        contentView.addSubview(collectionView)
+        return collectionView
     }()
     
-    lazy var outerwearImage: UIImageView = {
-        let outerwearImage = UIImageView()
-        outerwearImage.translatesAutoresizingMaskIntoConstraints = false
-        outerwearImage.contentMode = .scaleAspectFit
-        contentView.addSubview(outerwearImage)
-        outerwearImage.image = UIImage(named: "clothes")
-        return outerwearImage
-    }()
+    var outfit = [Outfit]()
     
-    lazy var trousersImage: UIImageView = {
-        let trousersImage = UIImageView()
-        trousersImage.contentMode = .scaleAspectFit
-        trousersImage.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(trousersImage)
-        trousersImage.image = UIImage(named: "clothes")
-        return trousersImage
-    }()
     
-    lazy var bootsImage: UIImageView = {
-        let bootsImage = UIImageView()
-        bootsImage.image = UIImage(named: "clothes")
-        bootsImage.translatesAutoresizingMaskIntoConstraints = false
-        bootsImage.contentMode = .scaleAspectFit
-        contentView.addSubview(bootsImage)
-        return bootsImage
-    }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -58,26 +36,27 @@ class ClothesInformationTableViewCell: UITableViewCell {
     }
     
     func setOutfit(currentWeather: Current?) {
-        guard let currentWeather = currentWeather else {
-            return
-        }
-        setOutfitImages(outfit: currentWeather.getOutfit())
+        guard let currentWeather = currentWeather else { return }
+        self.outfit = currentWeather.getOutfit()
     }
     
-    func setOutfitImages(outfit: Outfit) {
-        outerwearImage.image = outfit.outerwearImage
-        trousersImage.image = outfit.trousersImage
-        bootsImage.image = outfit.bootsImage
+    private func configureCollectionView() {
+        clothesCollectionView.delegate = self
+        clothesCollectionView.dataSource = self
+        clothesCollectionView.backgroundColor = .clear
+        clothesCollectionView.register(ClothesCollectionViewCell.self,
+                                       forCellWithReuseIdentifier: ClothesCollectionViewCell.reuseIdentifier)
+        NSLayoutConstraint.activate([
+            clothesCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            clothesCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            clothesCollectionView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            clothesCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+        ])
     }
     
     func addViews() {
         addShape()
-        NSLayoutConstraint.activate([
-            clothesStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            clothesStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            clothesStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            clothesStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
-        ])
+        configureCollectionView()
     }
     
     func addShape() {
@@ -88,6 +67,35 @@ class ClothesInformationTableViewCell: UITableViewCell {
     
     
 
+}
+
+extension ClothesInformationTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let outfitCell = collectionView.dequeueReusableCell(withReuseIdentifier: ClothesCollectionViewCell.reuseIdentifier,
+                                                                  for: indexPath) as? ClothesCollectionViewCell else
+                                                                  { return UICollectionViewCell() }
+        outfitCell.setClothes(outfit: outfit[indexPath.row])
+        return outfitCell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 60, height: 147)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 31
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    
 }
 
 

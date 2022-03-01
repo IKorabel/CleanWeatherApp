@@ -228,7 +228,8 @@ extension MainWeatherSceneViewController: UITableViewDataSource, UITableViewDele
             return hourlyWeatherCell
         case 1:
             guard let clothesCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.clothesTableViewCell) as? ClothesInformationTableViewCell else { return UITableViewCell() }
-            clothesCell.setOutfit(currentWeather: weatherInfo?.current)
+            guard let weatherInfo = weatherInfo else { return UITableViewCell() }
+            clothesCell.outfit = weatherInfo.current.getOutfit()
             return clothesCell
         case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.dailyWeatherCell) as? DailyWeatherTableViewCell else { return UITableViewCell() }
